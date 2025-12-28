@@ -56,10 +56,10 @@ To run an user script, you need an user script manager like Violentmonkey
 [Edge](https://microsoftedge.microsoft.com/addons/detail/iikmkjmpaadaobahmlepeloendndfphd),
 [Safari](https://apps.apple.com/app/tampermonkey/id6738342400)).
 
-This fork is distributed through [GitHub releases](https://github.com/TuxedoTako/4chan-xt/releases) and [Greasy Fork](https://greasyfork.org/scripts/489508-4chan-xt).
+This fork is distributed through [GitHub releases](https://github.com/paradox460/4chan-xt/releases).
 There are known issues with updating user scripts through GitHub: [#34](https://github.com/TuxedoTako/4chan-xt/issues/34)
-[violentmonkey#1673](https://github.com/violentmonkey/violentmonkey/issues/1673), but Greasy Fork doesn't allow the
-minified version. Automatic updates are supported for the user script version, but not the Chrome extension.
+[violentmonkey#1673](https://github.com/violentmonkey/violentmonkey/issues/1673)
+Automatic updates are supported for the user script version, but not the Chrome extension.
 
 ## Build from source
 
@@ -73,18 +73,17 @@ The simplest build is as easy as `bun install` `bun run build`, but there are so
 - `-test` Include tests in build.
 
 ## Troubleshooting
-If you encounter a bug, try the steps [here](https://github.com/TuxedoTako/4chan-xt/blob/project-XT/CONTRIBUTING.md#reporting-bugs),
-then report it to the [issue tracker](https://github.com/TuxedoTako/4chan-xt/issues?q=is%3Aopen+sort%3Aupdated-desc).
+If you encounter a bug, try the steps [here](https://github.com/paradox460/4chan-xt/blob/project-XT/CONTRIBUTING.md#reporting-bugs),
+then report it to the [issue tracker](https://github.com/paradox460/4chan-xt/issues?q=is%3Aopen+sort%3Aupdated-desc).
 If the bug seems to be caused by a script update, you can install a old version from the
-[GitHub releases](https://github.com/TuxedoTako/4chan-xt/releases) or from
-[Greasy Fork](https://greasyfork.org/scripts/489508-4chan-xt/versions).
+[GitHub releases](https://github.com/TuxedoTako/4chan-xt/releases).
 
 ## More information
-- [Changelog](https://github.com/TuxedoTako/4chan-xt/blob/project-XT/CHANGELOG.md)
+- [Changelog](https://github.com/paradox460/4chan-xt/blob/project-XT/CHANGELOG.md)
 - [Frequently Asked Questions for this fork](https://github.com/TuxedoTako/4chan-xt/wiki/Frequently-Asked-Questions)
 - [Frequently Asked Questions for upstream, most should still apply](https://github.com/ccd0/4chan-x/wiki/Frequently-Asked-Questions)
-- [Report Bugs](https://github.com/TuxedoTako/4chan-xt/issues?q=is%3Aopen+sort%3Aupdated-desc)
-- [Contributing](https://github.com/TuxedoTako/4chan-xt/blob/project-XT/CONTRIBUTING.md)
+- [Report Bugs](https://github.com/paradox460/4chan-xt/issues?q=is%3Aopen+sort%3Aupdated-desc)
+- [Contributing](https://github.com/paradox460/4chan-xt/blob/project-XT/CONTRIBUTING.md)
 
 ### TODO
 
