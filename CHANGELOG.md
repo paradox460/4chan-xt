@@ -3,6 +3,11 @@
 4chan XT uses a different user script namespace than 4chan X, so to migrate you need to export settings from 4chan X,
 and import them in XT.
 
+### 2.24.3 (2025-12-28)
+
+I'm gonna maintain a fork as far as I care, but ymmv. Nothing has changed in
+this release, besides reverting the "The end" stuff
+
 ### 2.24.2 (2025-12-23 🎅🏻)
 
 I'm officially stopping XT since I don't use 4chan anymore. This update removes the update URL, and merges the last two

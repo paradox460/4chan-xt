@@ -4,18 +4,18 @@
   "meta": {
     "name": "4chan XT",
     "path": "4chan-XT",
-    "fork": "TuxedoTako",
-    "page": "https://github.com/TuxedoTako/4chan-xt",
-    "downloads": "https://github.com/TuxedoTako/4chan-xt/releases",
+    "fork": "paradox460",
+    "page": "https://github.com/paradox460/4chan-xt",
+    "downloads": "https://github.com/paradox460/4chan-xt/releases",
     "oldVersions": "https://raw.githubusercontent.com/ccd0/4chan-x/",
     "faq": "https://github.com/TuxedoTako/4chan-xt/wiki/Frequently-Asked-Questions",
     "upstreamFaq": "https://github.com/ccd0/4chan-x/wiki/Frequently-Asked-Questions",
     "captchaFAQ": "https://github.com/ccd0/4chan-x/wiki/Captcha-FAQ",
     "cssGuide": "https://github.com/ccd0/4chan-x/wiki/Styling-Guide",
-    "license": "https://github.com/TuxedoTako/4chan-xt/blob/project-XT/LICENSE",
-    "changelog": "https://github.com/TuxedoTako/4chan-xt/blob/project-XT/CHANGELOG.md",
-    "issues": "https://github.com/TuxedoTako/4chan-xt/issues",
-    "newIssue": "https://github.com/TuxedoTako/4chan-xt/issues",
+    "license": "https://github.com/paradox460/4chan-xt/blob/project-XT/LICENSE",
+    "changelog": "https://github.com/paradox460/4chan-xt/blob/project-XT/CHANGELOG.md",
+    "issues": "https://github.com/paradox460/4chan-xt/issues",
+    "newIssue": "https://github.com/paradox460/4chan-xt/issues",
     "newIssueMaxLength": 8181,
     "alternatives": "https://www.4chan-x.net/4chan_alternatives.html",
     "appid": "lacclbnghgdicfifcamcmcnilckjamag",
@@ -107,7 +107,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TuxedoTako/4chan-xt.git"
+    "url": "https://github.com/paradox460/4chan-xt.git"
   },
   "contributors": [
     "James Campos <james.r.campos@gmail.com>",
@@ -117,7 +117,8 @@
     "seaweedchan <jtbates@asu.edu>",
     "Kabir Sala <spittiepie@gmail.com>",
     "ccd0 <admin@containerchan.org>",
-    "Tuxedo Takodachi <TuxedoTako@proton.me>"
+    "Tuxedo Takodachi <TuxedoTako@proton.me>",
+    "paradox460 <4cx@pdx.su>"
   ],
   "license": "MIT",
   "readmeFilename": "README.md",

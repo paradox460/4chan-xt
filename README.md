@@ -1,11 +1,3 @@
-# 4chan XT is dead
-
-I stopped using 4chan since the hack. I now browse alt chans that actually care about their users, and don't need an 
-userscript fighting their shitty design.
-
-<details>
-<summary>Old readme</summary>
-
 4chan XT is a script that adds various features to anonymous imageboards. It was originally developed for 4chan but has
 no affiliation with it.
 
@@ -29,6 +21,7 @@ New features since the fork include:
 - Showing the reason a post was filtered in the stub
 - Marking replies to your post on the scroll bar
 
+4chan XT was previously maintained by [TuxedoTako](https://github.com/TuxedoTako/4chan-xt).
 4chan X was previously developed by [ccd0](https://github.com/ccd0/4chan-x),
 [aeosynth](https://github.com/aeosynth/4chan-x), [Mayhem](https://github.com/MayhemYDG/4chan-x),
 [ihavenoface](https://github.com/ihavenoface/4chan-x), [Zixaphir](https://github.com/zixaphir/appchan-x),
@@ -129,5 +122,4 @@ If the bug seems to be caused by a script update, you can install a old version 
 - @violentmonkey/types was chosen over @types/greasemonkey because @types/greasemonkey only declares the GM object,
   and not GM\_ functions
 
-</details>
 </details>
