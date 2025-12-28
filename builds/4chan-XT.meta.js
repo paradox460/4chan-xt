@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         4chan XT
-// @version      2.24.2
+// @version      2.24.3
 // @minGMVer     1.14
 // @minFFVer     78
 // @namespace    4chan-XT
 // @description  4chan XT is a script that adds various features to anonymous imageboards.
-// @license      MIT; https://github.com/TuxedoTako/4chan-xt/blob/project-XT/LICENSE
+// @license      MIT; https://github.com/paradox460/4chan-xt/blob/project-XT/LICENSE
 // @include      https://boards.4chan.org/*
 // @include      https://sys.4chan.org/*
 // @include      https://www.4chan.org/*
@@ -77,8 +77,8 @@
 // @grant        GM.openInTab
 // @grant        GM.xmlHttpRequest
 // @run-at       document-start
-// @updateURL    none
-// @downloadURL  https://github.com/TuxedoTako/4chan-xt/releases/latest/download/4chan-XT.user.js
+// @updateURL    https://github.com/paradox460/4chan-xt/releases/latest/download/4chan-XT.meta.js
+// @downloadURL  https://github.com/paradox460/4chan-xt/releases/latest/download/4chan-XT.user.js
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAACVBMVEUAAGcAAABmzDNZt9VtAAAAAXRSTlMAQObYZgAAAF5JREFUeNrtkTESABAQxPD/R6tsE2dUGYUtFJvLDKf93KevHJAjpBorAQWSBIKqFASC4G0pCAkm4GfaEvgYXl0T6HBaE97f0vmnfYHbZOMLZCx9ISdKWwjOWZSC8GYm4SUGwfYgqI4AAAAASUVORK5CYII=
 // @license      MIT
 // ==/UserScript==
