@@ -63,7 +63,7 @@ minified version. Automatic updates are supported for the user script version, b
 
 ## Build from source
 
-The simplest build is as easy as `npm install` `npm run build`, but there are some options:
+The simplest build is as easy as `bun install` `bun run build`, but there are some options:
 
 - `-min`: Minified output.
 - `-platform=userscript`, `-platform=crx`: Only builds for one platform, and removes code related to only the other.

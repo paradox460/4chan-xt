@@ -8,6 +8,9 @@ and import them in XT.
 I'm gonna maintain a fork as far as I care, but ymmv. Nothing has changed in
 this release, besides reverting the "The end" stuff
 
+- Revert "the end"
+- Move from node/npm slop to Bun
+
 ### 2.24.2 (2025-12-23 🎅🏻)
 
 I'm officially stopping XT since I don't use 4chan anymore. This update removes the update URL, and merges the last two

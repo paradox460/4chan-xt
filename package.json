@@ -127,12 +127,12 @@
   },
   "type": "module",
   "scripts": {
-    "build": "node ./tools/rollup",
-    "build:min": "node ./tools/rollup -min -platform=userscript",
-    "build:userscript": "node ./tools/rollup -platform=userscript",
-    "build:crx": "node ./tools/rollup -platform=crx",
-    "build:userscript:min": "node ./tools/rollup -min -platform=userscript",
-    "build:crx:min": "node ./tools/rollup -min -platform=crx",
-    "build:all": "node ./tools/rollup -min -platform=userscript && node ./tools/rollup -platform=userscript && node ./tools/rollup -platform=crx"
+    "build": "bun ./tools/rollup",
+    "build:min": "bun ./tools/rollup -min -platform=userscript",
+    "build:userscript": "bun ./tools/rollup -platform=userscript",
+    "build:crx": "bun ./tools/rollup -platform=crx",
+    "build:userscript:min": "bun ./tools/rollup -min -platform=userscript",
+    "build:crx:min": "bun ./tools/rollup -min -platform=crx",
+    "build:all": "bun ./tools/rollup -min -platform=userscript && bun ./tools/rollup -platform=userscript && bun ./tools/rollup -platform=crx"
   }
 }
