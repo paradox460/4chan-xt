@@ -133,6 +133,9 @@
     "build:crx": "bun ./tools/rollup -platform=crx",
     "build:userscript:min": "bun ./tools/rollup -min -platform=userscript",
     "build:crx:min": "bun ./tools/rollup -min -platform=crx",
-    "build:all": "bun ./tools/rollup -min -platform=userscript && bun ./tools/rollup -platform=userscript && bun ./tools/rollup -platform=crx"
+    "build:all": "bun ./tools/rollup -min -platform=userscript && bun ./tools/rollup -platform=userscript && bun ./tools/rollup -platform=crx",
+    "version": "bun ./tools/version.ts",
+    "version:dev": "bun ./tools/version.ts --dev",
+    "version:release": "bun ./tools/version.ts --release"
   }
 }
