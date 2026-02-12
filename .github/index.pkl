@@ -1,0 +1,6 @@
+amends "@pkl.github.dependabotManagedActions/DependabotManagedActions.pkl"
+
+workflows {
+  ["workflows/build.yml"] = import("pkl_workflows/build.pkl")
+  ["workflows/release.yml"] = import("pkl_workflows/release.pkl")
+}

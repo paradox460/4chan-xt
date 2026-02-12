@@ -1,0 +1,40 @@
+import "@com.github.actions/AbstractStep.pkl"
+import "@com.github.actions/catalog.pkl"
+import "@com.github.actions/Step.pkl"
+// import "@com.github.actions/Workflow.pkl"
+
+import "../actions/MiseAction.pkl"
+
+steps = new Listing {
+  (catalog.`actions/checkout@v6`)
+  (MiseAction) {
+    with {
+      mise_toml =
+        """
+          [settings]
+          enable_tools = ["bun"]
+        """
+    }
+  }
+  (catalog.`actions/cache@v4`) {
+    name = "Bun Deps Cache"
+    id = "bun-deps-cache"
+    with {
+      path = "~/.bun/install/cache"
+      key = "bun-cache-${{hashFiles('.mise.lock')}}-${{hashFiles('assets/bun.lock')}}"
+      `restore-keys` = "bun-cache-${{hashFiles('.mise.lock')}}-"
+    }
+  }
+  new Step {
+    name = "Install JS deps"
+    run = "bun install --frozen-lockfile"
+  }
+  new Step {
+    name = "Build all"
+    run =
+      """
+      bun run version
+      bun run build:all
+      """
+  }
+}

@@ -1,0 +1,29 @@
+amends "@com.github.actions/Workflow.pkl"
+
+import "@com.github.actions/catalog.pkl"
+import "@com.github.actions/Workflow.pkl"
+
+import "common_build.pkl"
+
+on {
+  push {}
+}
+
+name = "Build Dev"
+
+jobs {
+  ["build"] {
+    `runs-on` = "ubuntu-latest"
+    steps = (common_build.steps) {
+      (catalog.`actions/upload-artifact@v5`) {
+        name = "Upload build artifacts"
+        with {
+          path = "builds/*"
+        }
+      }
+    }
+    env {
+      ["VERSION_MODE"] = "dev"
+    }
+  }
+}

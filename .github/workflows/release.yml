@@ -1,0 +1,40 @@
+# Generated from Workflow.pkl. DO NOT EDIT.
+name: Release
+'on':
+  push:
+    tags:
+    - XT-v*
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION_MODE: release
+      RELEASE_VERSION: ${{ github.ref_name }}
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      with: {}
+    - uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3
+      with:
+        mise_toml: |2-
+            [settings]
+            enable_tools = ["bun"]
+    - name: Bun Deps Cache
+      id: bun-deps-cache
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: ~/.bun/install/cache
+        key: bun-cache-${{hashFiles('.mise.lock')}}-${{hashFiles('assets/bun.lock')}}
+        restore-keys: bun-cache-${{hashFiles('.mise.lock')}}-
+    - name: Install JS deps
+      run: bun install --frozen-lockfile
+    - name: Build all
+      run: |-
+        bun run version
+        bun run build:all
+    - name: Release new version
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |-
+        zip -r builds/crx.zip builds/crx/*
+        rm -rf builds/crx/
+        gh release create "${{ github.ref_name }}" --generate-notes -d --fail-on-no-commits --repo ${{ github.repository }} builds/*

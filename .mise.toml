@@ -1,2 +1,8 @@
 [tools]
 bun = "latest"
+pkl = "latest"
+
+[tasks.gh-workflow]
+description = "Build new workflows"
+run = "pkl eval -m . index.pkl"
+dir = "{{ config_root }}/.github"

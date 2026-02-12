@@ -1,0 +1,40 @@
+amends "@com.github.actions/Workflow.pkl"
+
+import "@com.github.actions/catalog.pkl"
+import "@com.github.actions/Workflow.pkl"
+
+import "common_build.pkl"
+
+on {
+  push {
+    tags {
+      "XT-v*"
+    }
+  }
+}
+
+name = "Release"
+
+jobs {
+  ["build"] {
+    `runs-on` = "ubuntu-latest"
+    env {
+      ["VERSION_MODE"] = "release"
+      ["RELEASE_VERSION"] = "${{ github.ref_name }}"
+    }
+    steps = (common_build.steps) {
+      new Step {
+        name = "Release new version"
+        env {
+          ["GH_TOKEN"] = "${{ secrets.GITHUB_TOKEN }}"
+        }
+        run =
+          """
+          zip -r builds/crx.zip builds/crx/*
+          rm -rf builds/crx/
+          gh release create "${{ github.ref_name }}" --generate-notes -d --fail-on-no-commits --repo ${{ github.repository }} builds/*
+          """
+      }
+    }
+  }
+}

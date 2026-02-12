@@ -1,0 +1,100 @@
+/// Actions for working with mise runtime manager
+module jdx.`mise-action`.v3.MiseAction
+
+extends "@com.github.actions/AbstractTypedStep.pkl"
+
+fixed action: "jdx/mise-action"
+
+fixed version: "v3"
+
+with: With
+
+class With {
+  /// The version of mise to use. If not specified, will use the latest release.
+  version: (String|Boolean|Number)?
+
+  /// The SHA256 checksum of the mise binary to verify the download.
+  sha256: (String|Boolean|Number)?
+
+  /// The directory that mise will be installed to, defaults to $HOME/.local/share/mise
+  /// Or $XDG_DATA_HOME/mise if $XDG_DATA_HOME is set.
+  /// Or $MISE_DATA_DIR if $MISE_DATA_DIR is set.
+  mise_dir: (String|Boolean|Number)?
+
+  /// If present, this value will be written to the .tool-versions file
+  tool_versions: (String|Boolean|Number)?
+
+  /// If present, this value will be written to the mise.toml file
+  mise_toml: (String|Boolean|Number)?
+
+  /// if false, will not run `mise install`
+  ///
+  /// Default if unspecified: `"true"`
+  install: (String|Boolean|Number)?
+
+  /// Arguments to pass to `mise install` such as "bun" to only install bun
+  install_args: (String|Boolean|Number)?
+
+  /// deprecated
+  install_dir: (String|Boolean|Number)?
+
+  /// if false, action will not read or write to cache
+  ///
+  /// Default if unspecified: `"true"`
+  cache: (String|Boolean|Number)?
+
+  /// if false, action will not write to cache
+  ///
+  /// Default if unspecified: `"true"`
+  cache_save: (String|Boolean|Number)?
+
+  /// The prefix key to use for the cache, change this to invalidate the cache
+  ///
+  /// Default if unspecified: `"mise-v0"`
+  cache_key_prefix: (String|Boolean|Number)?
+
+  /// Override the complete cache key (ignores all other cache key options).
+  /// Supports template variables: {{version}}, {{cache_key_prefix}}, {{platform}}, {{file_hash}},
+  /// {{mise_env}}, {{install_args_hash}}, {{default}}, {{env.VAR_NAME}} for environment variables,
+  /// and conditional logic like {{#if version}}...{{/if}}
+  cache_key: (String|Boolean|Number)?
+
+  /// if true, will use experimental features
+  ///
+  /// Default if unspecified: `"false"`
+  experimental: (String|Boolean|Number)?
+
+  /// The log level to use for the action
+  ///
+  /// Default if unspecified: `"info"`
+  log_level: (String|Boolean|Number)?
+
+  /// The directory that mise runs in
+  working_directory: (String|Boolean|Number)?
+
+  /// if true, will run `mise reshim --all` after setting up mise
+  ///
+  /// Default if unspecified: `"false"`
+  reshim: (String|Boolean|Number)?
+
+  /// if false, will not add mise shims directory to PATH
+  ///
+  /// Default if unspecified: `"true"`
+  add_shims_to_path: (String|Boolean|Number)?
+
+  /// GitHub token for API authentication to avoid rate limits when installing GitHub-hosted tools.
+  /// Defaults to the automatic GitHub token.
+  ///
+  /// Default if unspecified: `"${{ github.token }}"`
+  github_token: (String|Boolean|Number)?
+
+  /// If true (default), fetch the mise binary from GitHub. If false and using the latest version, fetch from mise.jdx.dev instead.
+  ///
+  /// Default if unspecified: `"true"`
+  fetch_from_github: (String|Boolean|Number)?
+
+  /// Automatically load mise env vars into GITHUB_ENV. Note that PATH modifications are not part of this.
+  ///
+  /// Default if unspecified: `"true"`
+  env: (String|Boolean|Number)?
+}
