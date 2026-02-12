@@ -38,6 +38,35 @@
   background-color: var(--xt-background);
 }
 
+#fourchanx-settings {
+  select[name="filter"][multiple] {
+    overflow: hidden;
+  }
+
+  .section-filter {
+    display: flex;
+    gap: 10px;
+    height: 100%;
+
+    select {
+     /*width: 120px;*/
+     flex-shrink: 0;
+
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      border: 1px solid transparent;
+
+      textarea {
+        padding-bottom: 0;
+        height: 100%;
+      }
+    }
+  }
+}
+
 /* Catalog */
 :root.catalog-hover-expand .catalog-container:hover > .post {
   background-color: var(--xt-background);
