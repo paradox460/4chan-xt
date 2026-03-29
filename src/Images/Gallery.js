@@ -18,6 +18,7 @@ import Header from '../General/Header';
 import { Conf, d, doc, g } from '../globals/globals';
 import UI from '../General/UI';
 import Get from '../General/Get';
+import QuotePreview from '../Quotelinks/QuotePreview';
 import { debounce, dict, SECOND } from '../platform/helpers';
 import Icon from '../Icons/icon';
 
@@ -84,15 +85,16 @@ var Gallery = {
     $.extend(dialog, {innerHTML: galleryPage });
 
     const object = {
-      buttons: '.gal-buttons',
-      frame:   '.gal-image',
-      name:    '.gal-name',
-      count:   '.count',
-      total:   '.total',
-      sauce:   '.gal-sauce',
-      thumbs:  '.gal-thumbnails',
-      next:    '.gal-image a',
-      current: '.gal-image img'
+      buttons:  '.gal-buttons',
+      frame:    '.gal-image',
+      name:     '.gal-name',
+      count:    '.count',
+      total:    '.total',
+      postInfo: '.gal-post-info',
+      sauce:    '.gal-sauce',
+      thumbs:   '.gal-thumbnails',
+      next:     '.gal-image a',
+      current:  '.gal-image img'
     };
     for (var key in object) { var value = object[key]; nodes[key] = $(value, dialog); }
 
@@ -259,6 +261,29 @@ var Gallery = {
         }
       }
       $.add(nodes.sauce, sauces);
+    }
+
+    // Set post info (post link + reply count)
+    $.rmAll(nodes.postInfo);
+    if (post || (post = g.posts.get(file.dataset.post))) {
+      const postLink = $.el('a', {
+        href: g.SITE.Build.postURL(post.board.ID, post.thread.ID, post.ID),
+        className: 'quotelink',
+        textContent: `>>` + post.ID
+      });
+
+      // Count replies to this post
+      let replyCount = 0;
+      post.thread.posts.forEach(function(p) {
+        if (!p.isClone && p.quotes.includes(post.fullID)) { replyCount++; }
+      });
+
+      const replyText = $.tn(` (${replyCount} ${replyCount === 1 ? 'reply' : 'replies'})`);
+
+      // Bind hover preview
+      $.on(postLink, 'mouseover', QuotePreview.mouseover);
+
+      $.add(nodes.postInfo, [postLink, replyText]);
     }
 
     // Continue slideshow if moving forward, stop otherwise
