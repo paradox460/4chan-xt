@@ -172,6 +172,8 @@ There are three ways to open the settings panel:
 2. Use the keyboard shortcut **Alt+O**
 3. The settings panel has five tabs: **Main**, **Filter**, **Sauce**, **Advanced**, and **Keybinds**
 
+> **Tip:** The Main tab has a search box at the top that lets you filter settings by name or description — handy for finding a specific option without scrolling through every category.
+
 ---
 
 ## Quick Tour of Features

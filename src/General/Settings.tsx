@@ -184,6 +184,21 @@ Enable it on boards.${location.hostname.split('.')[1]}.org in your browser's pri
     }
     $.add(section, warnings);
 
+    // Search box for filtering settings
+    const searchBox = $.el('input', {
+      type: 'text',
+      className: 'settings-search',
+      placeholder: 'Search settings\u2026',
+    });
+    $.add(section, searchBox);
+
+    const noResults = $.el('div', {
+      className: 'settings-no-results',
+      textContent: 'No settings matched your search.',
+      hidden: true,
+    });
+    $.add(section, noResults);
+
     const items  = dict();
     const inputs = dict();
     const addCheckboxes = function(root, obj) {
@@ -228,6 +243,71 @@ Enable it on boards.${location.hostname.split('.')[1]}.org in your browser's pri
       $.add(section, fs);
     }
     addCheckboxes($('div[data-name="JSON Index"] > .suboption-list', section), Config.Index);
+
+    // Live-filter settings by name/description
+    $.on(searchBox, 'input', function() {
+      const query = this.value.trim().toLowerCase();
+      const isSearching = !!query;
+      const fieldsets = $$('fieldset', section);
+      let totalVisible = 0;
+
+      for (const fs of fieldsets) {
+        // Skip the warnings fieldset
+        if (fs === warnings) continue;
+        let anyVisible = false;
+
+        // Iterate all setting divs (including nested suboptions)
+        const allSettingDivs = $$('div[data-name]', fs);
+        for (const div of allSettingDivs) {
+          const name = (div.dataset.name || '').toLowerCase();
+          const desc = (div.querySelector(':scope > .description')?.textContent || '').toLowerCase();
+          const match = !isSearching || name.includes(query) || desc.includes(query);
+          div.dataset.settingsMatch = match ? 'true' : 'false';
+        }
+
+        // For top-level divs: show if it or any descendant suboption matches
+        const topLevelDivs = Array.from(fs.children).filter(
+          (el): el is HTMLElement => el instanceof HTMLElement && el.matches('div[data-name]')
+        );
+        for (const div of topLevelDivs) {
+          const selfMatch = div.dataset.settingsMatch === 'true';
+          const childMatch = !!div.querySelector('div[data-settings-match="true"]');
+          const visible = !isSearching || selfMatch || childMatch;
+          div.style.display = visible ? '' : 'none';
+          if (visible) anyVisible = true;
+        }
+
+        // Reveal suboption-lists when searching so matched children are visible
+        const suboptionLists = $$('.suboption-list', fs);
+        for (const list of suboptionLists) {
+          if (isSearching) {
+            const hasMatch = !!list.querySelector('div[data-settings-match="true"]');
+            list.classList.toggle('settings-search-reveal', hasMatch);
+          } else {
+            list.classList.remove('settings-search-reveal');
+          }
+        }
+
+        // Also show/hide individual suboption divs within revealed lists
+        if (isSearching) {
+          const nestedDivs = $$('.suboption-list > div[data-name]', fs);
+          for (const div of nestedDivs) {
+            div.style.display = div.dataset.settingsMatch === 'true' ? '' : 'none';
+          }
+        } else {
+          const nestedDivs = $$('.suboption-list > div[data-name]', fs);
+          for (const div of nestedDivs) {
+            div.style.display = '';
+          }
+        }
+
+        // Hide fieldset entirely if no settings match
+        fs.hidden = isSearching && !anyVisible;
+        if (anyVisible) totalVisible++;
+      }
+
+      noResults.hidden = !isSearching || totalVisible > 0;
+    });
 
     $.get(items, function(items) {
       for (key in items) {

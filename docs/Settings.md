@@ -18,7 +18,9 @@ The settings dialog has five tabs:
 
 ## Main Tab
 
-The Main tab contains toggle switches for all of 4chan XT's features, organized into these categories:
+The Main tab contains toggle switches for all of 4chan XT's features. A **search box** at the top of the tab lets you quickly find settings by typing part of a setting's name or description. As you type, settings that don't match are hidden in real time, and entire category groups are collapsed when none of their settings match. Clearing the search box restores the full list.
+
+Settings are organized into these categories:
 
 - **Miscellaneous** — General features like JSON Index, keybinds, time formatting, desktop notifications, etc.
 - **Linkification** — Auto-linking URLs, embedding media, link titles
@@ -29,7 +31,7 @@ The Main tab contains toggle switches for all of 4chan XT's features, organized 
 - **Posting and Captchas** — Quick Reply, captcha settings, cooldown timers
 - **Quote Links** — Backlinks, inline quotes, quote previews, (You) markers
 
-Each setting has a description that appears when you hover over it. Some settings are sub-options (indented) that only appear when their parent setting is enabled.
+Each setting has a description displayed next to its name. Some settings are sub-options (indented) that only appear when their parent setting is enabled. When using the search box, matching sub-options are revealed even if their parent is currently disabled, so you can always find what you're looking for.
 
 At the bottom of the Main tab you will also find a summary of your currently hidden threads and posts, with a button to purge them.
 
