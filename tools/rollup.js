@@ -43,7 +43,11 @@ const tsPlugin = typescript({
 
   const license = await readFile(resolve(__dirname, '../LICENSE'), 'utf8');
 
-  const version = JSON.parse(await readFile(resolve(__dirname, '../version.json'), 'utf-8'));
+  // Bump the date in version.json to the current build time
+  const versionFilePath = resolve(__dirname, '../version.json');
+  const version = JSON.parse(await readFile(versionFilePath, 'utf-8'));
+  version.date = new Date().toISOString();
+  await writeFile(versionFilePath, JSON.stringify(version, null, 2) + '\n');
 
   const inlineFile = setupFileInliner(packageJson);
 
