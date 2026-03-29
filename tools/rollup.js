@@ -136,6 +136,7 @@ const tsPlugin = typescript({
           meta.matches_extra = undefined;
           meta.exclude_matches = undefined;
           meta.grants = undefined;
+          meta.changelog = `${meta.page}/releases/tag/XT-v${version.version}`;
           return `export default ${JSON.stringify(meta, undefined, 1)};`;
         }
       }),
