@@ -3,6 +3,16 @@
 4chan XT uses a different user script namespace than 4chan X, so to migrate you need to export settings from 4chan X,
 and import them in XT.
 
+Generally the release notes in each release ([latest](https://github.com/paradox460/4chan-xt/releases/latest)) will be more accurate, at a commit-by-commit level
+
+### 2026.2.12 (2026-02-12)
+
+Project moved to calver semver (`YYYY.M.D`).
+
+- Improved the Settings → Filter tab with a two-column layout that lists all filter types at once.
+  [TuxedoTako/4chan-xt#194](https://github.com/TuxedoTako/4chan-xt/pull/194)
+  by [@bingsoo420](https://github.com/bingsoo420)
+
 ### 2.24.3 (2025-12-28)
 
 I'm gonna maintain a fork as far as I care, but ymmv. Nothing has changed in
