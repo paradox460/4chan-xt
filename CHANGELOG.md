@@ -5,6 +5,22 @@ and import them in XT.
 
 Generally the release notes in each release ([latest](https://github.com/paradox460/4chan-xt/releases/latest)) will be more accurate, at a commit-by-commit level
 
+### 2026.3.29 (2026-03-29)
+
+#### New Features
+
+- **aria2 & Bulk Image Downloader** — Download entire threads worth of images in one click. A new "Download All Media" option in the header menu collects every file attachment in the current thread and downloads them all. Optionally integrates with [aria2c](https://aria2.github.io/) for faster, more reliable downloads via its JSON-RPC interface — configurable under Advanced Settings with URL and secret token fields. When aria2c is unreachable, gracefully falls back to sequential browser downloads.
+- **Gallery Post View Hover** — The fullscreen gallery now shows a post info overlay on each image, displaying a quotelink to the source post and its reply count. Hover over the quotelink to get a full post preview without leaving the gallery.
+- **Settings Search** — A search box at the top of the main settings page lets you instantly filter settings by name or description. Collapsed sub-option groups are automatically expanded to reveal matches, and non-matching settings are hidden in real time.
+
+#### Bug Fixes
+
+- Changelog link now points to the specific release for the installed version, rather than always linking to the latest release.
+
+#### Documentation
+
+- Added comprehensive documentation covering installation, getting started, features, customization, filtering, posting, images & media, archives, monitoring, embedding, settings, sauce, keyboard shortcuts, and troubleshooting.
+
 ### 2026.2.12 (2026-02-12)
 
 Project moved to calver semver (`YYYY.M.D`).
