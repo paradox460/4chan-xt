@@ -2,6 +2,7 @@ import Redirect from "../Archive/Redirect";
 import Notice from "../classes/Notice";
 import { g, Conf, d } from "../globals/globals";
 import $ from "../platform/$";
+import Aria2c from "../platform/Aria2c";
 import CrossOrigin from "../platform/CrossOrigin";
 import ImageHost from "./ImageHost";
 import Volume from "./Volume";
@@ -120,15 +121,12 @@ var ImageCommon = {
       (e.target.controls && ((e.target.getBoundingClientRect().bottom - e.clientY) < 35));
   },
 
-  download(e) {
-    if (this.protocol === 'blob:') { return true; }
-    e.preventDefault();
-    const {href, download} = this;
+  browserDownload(href, filename) {
     return CrossOrigin.file(href, function(blob) {
       if (blob) {
         const a = $.el('a', {
           href: URL.createObjectURL(blob),
-          download,
+          download: filename,
           hidden: true
         }
         );
@@ -138,6 +136,15 @@ var ImageCommon = {
       } else {
         return new Notice('warning', `Could not download ${href}`, 20);
       }
+    });
+  },
+
+  download(e) {
+    if (this.protocol === 'blob:') { return true; }
+    e.preventDefault();
+    const {href, download} = this;
+    Aria2c.downloadSingle(href, download, () => {
+      ImageCommon.browserDownload(href, download);
     });
   }
 };

@@ -229,3 +229,17 @@
     <input type="string" name="beepSource" class="field wide" />
   </label>
 </fieldset>
+
+<fieldset>
+  <legend>aria2c Downloader</legend>
+  <div>Send thread media downloads to an <a href="https://aria2.github.io/" target="_blank">aria2c</a> instance via its JSON-RPC interface instead of downloading through the browser.</div>
+  <label><input type="checkbox" name="aria2cEnabled"> Enable aria2c</label><br />
+  <label>
+    JSON-RPC URL:
+    <input name="aria2cUrl" class="field wide" spellcheck="false" placeholder="http://localhost:6800/jsonrpc" />
+  </label><br />
+  <label>
+    Secret token (leave empty if none):
+    <input name="aria2cSecret" type="password" class="field wide" spellcheck="false" />
+  </label>
+</fieldset>

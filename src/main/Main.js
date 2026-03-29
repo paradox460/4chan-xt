@@ -29,6 +29,7 @@ import Linkify from "../Linkification/Linkify";
 import ArchiveLink from "../Menu/ArchiveLink";
 import CopyTextLink from "../Menu/CopyTextLink";
 import DeleteLink from "../Menu/DeleteLink";
+import DownloadAllLink from "../Menu/DownloadAllLink";
 import DownloadLink from "../Menu/DownloadLink";
 import ReportLink from "../Menu/ReportLink";
 import AntiAutoplay from "../Miscellaneous/AntiAutoplay";
@@ -943,6 +944,7 @@ User agent: ${navigator.userAgent}\
     ['Reply Pruning',             ReplyPruning],
     ['Mod Contact Links',         ModContact],
     ['Restore deleted posts from archive', RestoreDeletedFromArchive],
+    ['Download All Media',        DownloadAllLink],
     ['Mark posts on scroll bar',  ScrollMarkers],
   ]
 };

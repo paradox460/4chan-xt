@@ -1226,5 +1226,9 @@ current-archive-text:"Archive"]
 
   beepSource: '',
   beepVolume: 1,
+
+  aria2cEnabled: false,
+  aria2cUrl: 'http://localhost:6800/jsonrpc',
+  aria2cSecret: '',
 };
 export default Config;
