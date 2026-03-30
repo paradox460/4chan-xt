@@ -75,6 +75,7 @@ var QR = {
     oekakiButton: HTMLAnchorElement,
     randomizeButton: HTMLAnchorElement,
     compress: HTMLAnchorElement,
+    randomizeMD5: HTMLAnchorElement,
     view: HTMLAnchorElement,
     restoreNameButton: HTMLAnchorElement,
     fileRM: HTMLAnchorElement,
@@ -783,6 +784,7 @@ var QR = {
     setNode('drawButton',     '#qr-draw-button');
     setNode('randomizeButton','#qr-randomize');
     setNode('compress',       '#qr-jpg');
+    setNode('randomizeMD5',   '#qr-randomize-md5');
     setNode('view',           '#qr-view');
     setNode('restoreNameButton','#qr-restore-name');
     setNode('fileSubmit',     '#file-n-submit');
@@ -833,6 +835,7 @@ var QR = {
     $.on(nodes.noFile,         'click',     QR.openFileInput);
     $.on(nodes.randomizeButton,'click',     () => { QR.selected.randomizeName(); });
     $.on(nodes.compress,       'click',     async () => { QR.handleFiles([await QR.convert(QR.selected.file)]); });
+    $.on(nodes.randomizeMD5,   'click',     async () => { QR.handleFiles([await QR.randomizeMD5(QR.selected.file)]); });
     $.on(nodes.view,           'click',     QR.preview);
     $.on(nodes.restoreNameButton,'click',   () => { QR.selected.restoreName(); });
     $.on(nodes.filename,       'focus',     function() { return $.addClass(this.parentNode, 'focus'); });
@@ -898,6 +901,7 @@ var QR = {
     Icon.set(nodes.customCooldown, 'clock');
     Icon.set(nodes.randomizeButton, 'shuffle');
     Icon.set(nodes.compress, 'shrink');
+    Icon.set(nodes.randomizeMD5, 'fingerprint');
     Icon.set(nodes.view, 'eye');
     Icon.set(nodes.restoreNameButton, 'undo');
     Icon.set(nodes.splitPost, 'scissors');
@@ -1317,6 +1321,46 @@ var QR = {
       return file;
     }
 
+    return newFile;
+  },
+
+  async randomizeMD5(file: File): Promise<File> {
+    if (!file || !file.type.startsWith('image/')) {
+      new Notice('warning', 'Randomize MD5 only works on image files.', 3);
+      return file;
+    }
+
+    const img = await createImageBitmap(file);
+    const { width, height } = img;
+
+    let canvas: HTMLCanvasElement | OffscreenCanvas;
+    let toBlob: (mime: string, quality: number) => Promise<Blob>;
+    if (window.OffscreenCanvas && !Conf['Avoid OffscreenCanvas']) {
+      canvas = new OffscreenCanvas(width, height);
+      toBlob = (mime, quality) => (canvas as OffscreenCanvas).convertToBlob({ type: mime, quality });
+    } else {
+      canvas = $.el('canvas', { width, height }) as HTMLCanvasElement;
+      toBlob = (mime, quality) => new Promise(resolve => {
+        (canvas as HTMLCanvasElement).toBlob(resolve, mime, quality);
+      });
+    }
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, width, height);
+
+    // Make an imperceptible change to a random pixel so the file hash differs.
+    const x = Math.floor(Math.random() * width);
+    const y = Math.floor(Math.random() * height);
+    const pixel = ctx.getImageData(x, y, 1, 1);
+    // Flip the least-significant bit of the first color channel.
+    pixel.data[0] ^= 1;
+    ctx.putImageData(pixel, x, y);
+
+    const mime = file.type;
+    const quality = mime === 'image/jpeg' ? 0.99 : undefined;
+    const newFile = new File([await toBlob(mime, quality)], file.name, { type: mime });
+
+    new Notice('info', 'Image MD5 has been randomized.', 3);
     return newFile;
   },
 
