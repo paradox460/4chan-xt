@@ -67,11 +67,228 @@ Here are some commonly targeted elements:
 
 ### CSS Custom Properties
 
-4chan XT and 4chan use CSS custom properties (variables) that you can override:
+4chan XT defines CSS custom properties (variables) prefixed with `--xt-` that control the colors and appearance of nearly every UI element. Each built-in theme (Yotsuba, Yotsuba B, Futaba, Burichan, Photon, Tomorrow, Spooky) sets these variables to match its palette. You can override any of them in your Custom CSS to tweak individual colors without rewriting entire rule sets.
 
-| Variable | Description |
+To override a variable, set it on `:root`:
+
+```css
+:root {
+  --xt-background: #1a1a2e;
+  --xt-border: #333;
+}
+```
+
+#### General
+
+These variables are used across dialogs, panels, and general UI chrome.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--xt-background` | *(theme-dependent)* | Background color for dialogs, settings panel, catalog hover cards, scrollbar thumbs, and other UI surfaces. |
+| `--xt-border` | *(theme-dependent)* | Border color for dialogs, settings panel, catalog entries, inline quote expansions, and other bordered elements. |
+| `--xt-border-field-focus` | *(theme-dependent)* | Border color applied to input fields when focused. |
+| `--xt-notification-size` | `9pt` | Font size for the header bar (when not fixed) and notification banners. |
+
+#### Header
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--xt-header-dialog-bg` | *(theme-dependent)* | Background color of the fixed header bar. |
+| `--xt-header-dialog-fg` | *(theme-dependent)* | Text color of the header bar and notification banners. |
+| `--xt-header-link` | `unset` | Color of board links and shortcut icons in the header. Also used as the fallback text color for the context menu. |
+
+#### Quick Reply
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--xt-qr-preview-bg` | `rgba(0, 0, 0, .15)` | Background color of the file preview thumbnail in the Quick Reply. |
+| `--xt-qr-link-border` | *(theme-dependent)* | Border color of the floating Quick Reply button. |
+| `--xt-qr-bg` | *(theme-dependent)* | Background gradient/color of the floating Quick Reply button. |
+| `--xt-link-hover-bg` | Falls back to `--xt-background` | Background of the Quick Reply button on hover. |
+
+#### Menu
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--xt-menu-fg` | Falls back to `--xt-header-link` | Text color of the dropdown context menu. |
+| `--xt-entry-size` | `10pt` | Font size for menu entries. |
+| `--xt-entry-focus-bg` | *(theme-dependent)* | Background color of a menu entry when hovered/focused. |
+
+#### Quoting & Highlighting
+
+These control the appearance of posts that quote you, your own posts, filter-highlighted posts, and quote previews.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--xt-border-highlight` | `rgba(221, 0, 0, .8)` | Left-border color for posts quoting you (solid) and your own posts (dashed). Also the fallback color for scroll markers. |
+| `--xt-qphl` | `rgba(216, 94, 49, .8)` | Outline color for the highlighted post when hovering a quote link (quote-preview highlight). |
+| `--xt-filter-highlight` | `rgba(221, 0, 0, .5)` | Left inset shadow color on posts matched by a filter `highlight` rule. |
+| `--xt-highlight-shadow` | `rgba(255, 0, 0, .5)` | Box shadow color for filter-highlighted threads in the catalog. |
+| `--xt-highlight-side-arrow` | `rgba(221, 0, 0, .8)` | Color of the `>>` side arrows next to highlighted or (You)-quoted posts. |
+| `--xt-inline` | `rgba(255, 255, 255, .14)` | Background color of inline-expanded quote blocks. |
+| `--xt-dead-link` | *(theme-dependent)* | Color of dead (404'd) quote links and backlinks. Also used for tweet embed stats text. |
+
+#### Monitoring & Unread
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--xt-unread` | *(theme-dependent)* | Background color for the "mark read" button strip on unread posts. |
+| `--xt-unread-line` | `rgb(255, 0, 0)` | Color of the horizontal line separating read from unread posts, and the corresponding scroll bar marker. Dark themes (Tomorrow, Spooky) override this to a lighter gray. |
+| `--xt-watcher` | `#000` | Color of the thread-watcher star icon. |
+| `--xt-watcher-quoting-you` | `#F00` | Text color in the thread watcher when a thread has unread replies quoting you. |
+| `--xt-watched-border` | `rgba(255, 0, 0, .75)` | Border color around watched-thread thumbnails in the catalog. |
+
+#### Scroll Markers
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--xt-scroll-marker-you` | Falls back to `--xt-border-highlight` | Color of the scroll bar markers indicating your posts and replies to you. |
+
+#### FxTwitter Embeds
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--xt-fxt-bg` | Falls back to `--xt-background` | Background color for embedded tweet cards. |
+| `--xt-fxt-fg` | `#000` | Text color for embedded tweet cards. Dark themes override this. |
+| `--xt-fxt-border` | Falls back to `--xt-border` | Border and separator color for embedded tweet cards, profile images, and reply threads. |
+
+### CSS Class Entry Points
+
+Beyond CSS variables, you can target specific 4chan XT elements directly. The classes below are the main entry points for styling — they are stable, deliberately applied by the script, and safe to use in Custom CSS rules.
+
+#### Page & Board Context
+
+Classes on the `<html>` element that let you scope rules by context:
+
+| Class | When Applied |
+|-------|-------------|
+| `.ws` | Work-safe (blue) boards |
+| `.nsw` | Not-safe-for-work (red) boards |
+| `.fixed` | Fixed header is enabled |
+| `.top-header` | Header is at the top of the page |
+| `.bottom-header` | Header is at the bottom of the page |
+| `.autohide` | Header auto-hide is active |
+| `.werkTyme` | "Work Mode" is enabled (hides thumbnails, simplifies layout) |
+| `.catalog-hover-expand` | Catalog hover-expand is enabled |
+| `.yotsuba`, `.yotsuba-b`, `.futaba`, `.burichan`, `.photon`, `.tomorrow`, `.spooky` | The currently active 4chan theme |
+
+#### Posts
+
+| Selector | Description |
 |----------|-------------|
-| `--xt-fxt-bg` | Background color for FxTwitter embeds |
+| `.post` | Any post (OP or reply) |
+| `.op` | The original post (thread opener) |
+| `.reply` | A reply post |
+| `.post.highlight` | A post highlighted by hovering a quote link |
+| `.yourPost` | A post you made (requires "Highlight Own Posts") |
+| `.quotesYou` | A post that quotes you (requires "Highlight Posts Quoting You") |
+| `.filter-highlight` | A post matched by a filter `highlight` rule. Custom class names from `highlight:classname` filter rules are also added here. |
+| `.post-hidden` | A hidden post (collapsed by filter or manual hide) |
+
+#### Thread Monitoring
+
+| Selector | Description |
+|----------|-------------|
+| `.unread-line` | The `<hr>` element separating read from unread posts. |
+| `.unread-mark-read` | The "mark as read" overlay strip on unread posts. |
+
+#### Header & Navigation
+
+| Selector | Description |
+|----------|-------------|
+| `#header-bar` | The 4chan XT header bar container. |
+| `#board-list` | The board navigation links inside the header. |
+| `#shortcuts` | Container for the shortcut icons (settings, watcher, gallery, etc.) in the header. |
+| `#scroll-marker` | The small marker on the header that indicates scroll position. |
+
+#### Quick Reply
+
+| Selector | Description |
+|----------|-------------|
+| `#qr` | The Quick Reply dialog. |
+| `.qr-link` | The floating "Quick Reply" button that opens the QR dialog. |
+| `.qr-preview` | The image preview thumbnail inside the Quick Reply. |
+| `#dump-list` | The file queue list when dumping multiple images. |
+
+#### Dialogs & Panels
+
+| Selector | Description |
+|----------|-------------|
+| `.dialog` | Any 4chan XT dialog or panel (settings, thread watcher, etc.). All dialogs share `--xt-background` and `--xt-border`. |
+| `#fourchanx-settings` | The settings panel specifically. |
+| `#thread-watcher` | The thread watcher panel. |
+| `#menu` | The dropdown context menu. |
+| `.entry` | An individual item inside a dropdown menu. |
+| `.focused.entry` | The currently hovered/focused menu item. |
+| `#notifications` | The notification banner area. |
+
+#### Images & Gallery
+
+| Selector | Description |
+|----------|-------------|
+| `.file` | The file info area (filename, size, dimensions). |
+| `.fileText` | The text portion of the file info line. |
+| `.fileThumb` | The thumbnail container. |
+| `#ihover` | The image hover preview overlay. |
+| `#embedding` | The floating media embed container (YouTube, etc.). |
+
+#### Catalog
+
+| Selector | Description |
+|----------|-------------|
+| `.catalog-thread` | A thread card in catalog view. |
+| `.catalog-thumb` | The thumbnail image inside a catalog thread card. |
+| `.catalog-thread.watched` | A watched thread in the catalog. |
+| `.catalog-thread.filter-highlight` | A filter-highlighted thread in the catalog. |
+
+#### Scroll Markers
+
+| Selector | Description |
+|----------|-------------|
+| `.scroll-marker-container` | The container holding all scroll bar markers (uses `display: contents`). |
+| `.post-scroll-marker` | A scroll bar marker for one of your posts or a reply to you. |
+| `.you-scroll-marker` | Modifier on `.post-scroll-marker` for your own posts (displayed at reduced opacity). |
+| `.reply-scroll-marker` | Modifier on `.post-scroll-marker` for posts that quote you. |
+| `.unread-scroll-marker` | The scroll bar marker showing the position of the unread line. |
+
+#### Inline Quotes & Backlinks
+
+| Selector | Description |
+|----------|-------------|
+| `.inline` | An inline-expanded quote block. |
+| `.backlink` | A backlink (a link from a later post pointing back to this one). |
+| `.backlink.deadlink` | A backlink to a post that no longer exists. |
+| `.qphl` | The quote-preview highlight outline on a post being previewed. |
+
+### Theming Tips
+
+- **Theme-specific overrides.** Scope your Custom CSS to a specific 4chan theme if you only want it to apply there:
+
+  ```css
+  :root.tomorrow {
+    --xt-unread-line: #81A2BE;
+  }
+  ```
+
+- **Dark theme detection.** The Tomorrow and Spooky themes set `color-scheme: dark` on `:root`, so you can use this as a hook:
+
+  ```css
+  :root[style*="color-scheme: dark"] {
+    --xt-background: #1c1c1c;
+  }
+  ```
+
+  Or target both dark themes at once:
+
+  ```css
+  :root.tomorrow, :root.spooky {
+    --xt-inline: rgba(255, 255, 255, 0.05);
+  }
+  ```
+
+- **Oneechan compatibility.** 4chan XT detects when the Oneechan extension is active and adds a `.oneechan` class to `:root`. Some highlight rules are scoped with `:root:not(.oneechan)` to avoid conflicts. If you use Oneechan, keep this in mind when writing highlight-related overrides.
+
+- **Variable fallback chains.** Some variables fall back to other variables (e.g., `--xt-link-hover-bg` falls back to `--xt-background`; `--xt-menu-fg` falls back to `--xt-header-link`). Changing a "parent" variable will cascade to its dependents unless they are explicitly set.
 
 ### Example: Custom Styles
 

@@ -1,39 +1,43 @@
-# CSS variables used by 4chan XT
+# CSS Architecture
 
-A lot of the css from vanilla 4chan is kept, but 4chan XT does also provide a lot of css itself. If you want to
-customize, you can overwrite these css variables:
+4chan XT's styles are split across several files that are inlined into the bundle at build time.
 
-| variable | description |
-| -------- | ----------- |
-| `--xt-background` | Background color used by some elements like the settings dialog |
-| `--xt-border` | Border color used by some elements like the settings dialog |
-| `--xt-border-field-focus` | Border color for focused fields |
-| `--xt-border-highlight` | Border color for highlighted fields |
-| `--xt-header-dialog-bg` | Background color for the header |
-| `--xt-header-dialog-fg` | Foreground color for the header and notifications |
-| `--xt-header-link` | Links and icon buttons in the header |
-| `--xt-dead-link` | Dead quote links |
-| `--xt-inline` | Background color of whatever .inline is |
-| `--xt-qr-preview-bg` | Background color of the image preview in the quick reply. Often covered by the image |
-| `--xt-qr-link-border` | Border color of the quick reply button |
-| `--xt-qr-bg` | Quick reply button background |
-| `--xt-link-hover-bg` | Quick reply button background when hovering over it |
-| `--xt-menu-fg` | Text color of the drop down menu from the header |
-| `--xt-entry-focus-bg` | Background color when hovering over a menu item |
-| `--xt-unread` | Background color for .unread-mark-read |
-| `--xt-watcher` | Thread watcher button |
-| `--xt-unread-line` | Unread line |
-| `--xt-filter-highlight` | Filter highlight border color |
-| `--xt-highlight-shadow` | Filter highlight border color |
-| `--xt-watched-border` | Border color of watched threads |
-| `--xt-qphl` | Quote highlight border color |
-| `--xt-highlight-side-arrow` | Own posts highlight arrow color |
-| `--xt-scroll-maker-you` | Scroll marker for posts quoting you |
+## File Overview
 
-## FxTwitter
+| File | Purpose |
+|------|---------|
+| `style.css` | Core layout and structural styles for all 4chan XT UI elements |
+| `variableBase.css` | Theme-agnostic rules that consume `--xt-*` CSS variables |
+| `yotsuba.css` | Variable definitions for the Yotsuba (red) theme |
+| `yotsuba-b.css` | Variable definitions for the Yotsuba B (blue) theme |
+| `futaba.css` | Variable definitions for the Futaba theme |
+| `burichan.css` | Variable definitions for the Burichan theme |
+| `photon.css` | Variable definitions for the Photon theme |
+| `tomorrow.css` | Variable definitions for the Tomorrow (dark) theme |
+| `spooky.css` | Variable definitions for the Spooky (dark) theme |
+| `report.css` | Styles for the report dialog |
+| `www.css` | Styles specific to the `www.4chan.org` landing page |
+| `CSS.ts` | Collects and exports all CSS strings for the build |
+| `style.ts` | Runtime style injection logic |
 
-| variable | description |
-| -------- | ----------- |
-| `--xt-fxt-bg` | Background color for embeds. |
-| `--xt-fxt-fg` | Foreground color for embeds. |
-| `--xt-fxt-border` | Border color for embeds. |
+## CSS Variables
+
+All custom properties are prefixed with `--xt-` and defined per-theme in the individual theme CSS files (e.g., `tomorrow.css` sets `--xt-background: #282A2E`). The `variableBase.css` file consumes these variables in theme-agnostic selectors, and `style.css` references them where needed for specific components.
+
+For a **complete reference** of every `--xt-*` variable, its default value, and what it controls, see the user-facing documentation:
+
+**[docs/Customization.md — CSS Custom Properties](../../docs/Customization.md#css-custom-properties)**
+
+That page also documents all stable CSS class entry points for custom styling.
+
+## Site-Specific Selector Placeholders
+
+`variableBase.css` uses `$site$`-prefixed placeholder tokens (e.g., `$site$highlightable$reply`) that are replaced at build time with site-specific selectors. These allow the same CSS rules to work across different imageboard software (4chan, Tinyboard, etc.).
+
+## Adding New Variables
+
+When adding a new `--xt-*` variable:
+
+1. Add a `var(--xt-your-variable, <fallback>)` reference in `style.css` or `variableBase.css`.
+2. Optionally define theme-specific values in the theme files that need non-default colors (dark themes often need overrides).
+3. Document the variable in `docs/Customization.md` under the appropriate category in the CSS Custom Properties section.
