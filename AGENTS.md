@@ -101,7 +101,7 @@ To include tests in a build: `bun run build -- -test`
 - **Bug Fixes** — for corrections to existing behavior. A short sentence is fine.
 - **Documentation** — for docs-only changes.
 
-If no version heading exists yet for unreleased work, add one at the top in the format `### YYYY.M.D.N (YYYY-MM-DD)`.
+If no version heading exists yet for unreleased work, add one with the heading of `### Unreleased`.
 
 ## Releases
 
@@ -119,6 +119,8 @@ End the release description with a **Full Changelog** comparison link:
 ```
 **Full Changelog**: https://github.com/paradox460/4chan-xt/compare/XT-v<previous>...XT-v<current>
 ```
+
+The CHANGELOG.md file must be updated so the `Unreleased` section at the top is updated upon a new release being built. It should be emptied, and the features that have been put into releases should be grouped under the appropriate heading.
 
 ## CI/CD
 
