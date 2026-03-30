@@ -21,7 +21,8 @@
 | `bun run build:min` | Build minified userscript |
 | `bun run build:all` | Build all variants (minified userscript, userscript, crx) |
 | `bun run version` | Update version.json with dev version (git commit SHA) |
-| `bun run version:release` | Update version.json with release CalVer version |
+| `bun run version:release` | Update version.json with release CalVer version (auto-increments sub-version) |
+| `bun run version:release -- --release 2026.3.29.2` | Update version.json with a specific release version |
 
 Build output goes to the `builds/` directory. The build entry point is `tools/rollup.js`, which uses Rollup with TypeScript, custom plugins for inlining files, and platform-specific code stripping.
 
@@ -100,7 +101,7 @@ To include tests in a build: `bun run build -- -test`
 - **Bug Fixes** — for corrections to existing behavior. A short sentence is fine.
 - **Documentation** — for docs-only changes.
 
-If no version heading exists yet for unreleased work, add one at the top in the format `### YYYY.M.D (YYYY-MM-DD)`.
+If no version heading exists yet for unreleased work, add one at the top in the format `### YYYY.M.D.N (YYYY-MM-DD)`.
 
 ## Releases
 
@@ -133,7 +134,7 @@ To regenerate workflows after editing Pkl sources: `mise run gh-workflow` (from 
 - **Circular dependencies** are common in the codebase due to its CoffeeScript heritage. Rollup handles them, but be aware of initialization order issues. Some shared utilities were moved to `src/globals/globals.ts` to break cycles.
 - **Platform-specific code** is conditionally included/excluded at build time via `tools/rollup-plugin-platform-specific.js`. Files with platform branches include `src/main/Main.js`, `src/platform/$.ts`, and `src/platform/CrossOrigin.ts`.
 - The `src/platform/$.ts` module is the primary DOM and Greasemonkey API abstraction layer — it is not jQuery.
-- **Versioning** uses CalVer (`YYYY.M.D`) for releases and `dev-<commit-sha>` for development builds, managed by `tools/version.ts` and stored in `version.json`.
+- **Versioning** uses CalVer (`YYYY.M.D.N`) for releases and `dev-<commit-sha>` for development builds, managed by `tools/version.ts` and stored in `version.json`. The sub-version `N` supports multiple releases in a single day. When auto-generating a release version (i.e. no custom version is provided), the script queries existing git tags matching today's date (`XT-vYYYY.M.D` and `XT-vYYYY.M.D.*`), finds the highest sub-version number, and increments it. The first release of a day is `YYYY.M.D.0`. Legacy tags without a sub-version (e.g. `XT-v2026.3.29`) are treated as sub-version `0`. Custom versions passed via `--release <version>` or `RELEASE_VERSION` bypass auto-detection and are used as-is (after stripping any `XT-v` prefix).
 
 ## Spell Checking
 
