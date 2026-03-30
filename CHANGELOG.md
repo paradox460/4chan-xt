@@ -5,6 +5,16 @@ and import them in XT.
 
 Generally the release notes in each release ([latest](https://github.com/paradox460/4chan-xt/releases/latest)) will be more accurate, at a commit-by-commit level
 
+### 2026.3.29.1 (2026-03-30)
+
+#### New Features
+
+- **Randomize MD5** — A new button in the Quick Reply lets you re-attach an image with a modified file hash, making it appear as a unique upload. Useful for reposting images that may have been blocked by hash-based duplicate detection.
+
+#### Documentation
+
+- Added `AGENTS.md` with comprehensive project documentation covering build system, project structure, code conventions, testing, CI/CD, versioning, and architectural notes for AI-assisted development.
+
 ### 2026.3.29 (2026-03-29)
 
 #### New Features
