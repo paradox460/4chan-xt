@@ -7,6 +7,7 @@ import { g, Conf, d } from "../globals/globals";
 import $ from "../platform/$";
 import { debounce, SECOND } from "../platform/helpers";
 import QuoteYou from "../Quotelinks/QuoteYou";
+import ScrollMarkers from "../Miscellaneous/ScrollMarkers";
 import Favicon from "./Favicon";
 import ThreadWatcher from "./ThreadWatcher";
 
@@ -279,7 +280,9 @@ var Unread = {
         $.rm(Unread.hr);
       }
     }
-    return Unread.hr.hidden = Unread.linePosition === Unread.order.last;
+    Unread.hr.hidden = Unread.linePosition === Unread.order.last;
+    ScrollMarkers.updateUnreadMarker();
+    return Unread.hr.hidden;
   },
 
   update() {

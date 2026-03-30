@@ -11,6 +11,11 @@ interface MarkerData {
   height: string;
 }
 
+interface UnreadMarkerData {
+  el?: HTMLDivElement,
+  top: string,
+}
+
 const ScrollMarkers = {
   init() {
     ScrollMarkers.container = $.el('div', { classList: 'scroll-marker-container' });
@@ -27,10 +32,13 @@ const ScrollMarkers = {
   // Keep instead of redoing so renewing doesn't lose keyboard focus
   markers: undefined as Map<string, MarkerData>,
 
+  unreadMarker: undefined as UnreadMarkerData,
+
   markScroll: debounce(100, () => {
     if (!Conf['Scroll Markers']) {
       ScrollMarkers.container.innerText = '';
       ScrollMarkers.markers = undefined;
+      ScrollMarkers.unreadMarker = undefined;
       return;
     }
 
@@ -75,8 +83,6 @@ const ScrollMarkers = {
       marker.el = el;
 
       previousEl = el;
-
-      document.createElement('button')
     }
 
     // Remove those that don't exist anymore
@@ -86,7 +92,40 @@ const ScrollMarkers = {
       }
     }
     ScrollMarkers.markers = newMarkers;
+
+    // Update unread line marker
+    ScrollMarkers.updateUnreadMarker();
   }, false),
+
+  updateUnreadMarker() {
+    const hr = document.getElementById('unread-line') as HTMLHRElement;
+
+    if (!hr || hr.hidden || !Conf['Scroll Markers'] || !Conf['Unread Line']) {
+      if (ScrollMarkers.unreadMarker?.el) {
+        ScrollMarkers.unreadMarker.el.remove();
+        ScrollMarkers.unreadMarker = undefined;
+      }
+      return;
+    }
+
+    const hrRect = hr.getBoundingClientRect();
+    const top = (((hrRect.top + window.scrollY) / doc.scrollHeight) * 100).toFixed(1);
+
+    let el = ScrollMarkers.unreadMarker?.el;
+    if (!el) {
+      el = $.el('div', {
+        className: 'unread-scroll-marker',
+        ariaLabel: 'Unread line position',
+      }) as HTMLDivElement;
+      $.on(el, 'click', () => {
+        hr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      $.add(ScrollMarkers.container, el);
+    }
+
+    el.style.setProperty('--top', top);
+    ScrollMarkers.unreadMarker = { el, top };
+  },
 };
 
 export default ScrollMarkers;

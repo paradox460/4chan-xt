@@ -2275,6 +2275,19 @@ div.post {
   opacity: 50%;
 }
 
+.unread-scroll-marker {
+  position: fixed;
+  right: -5px;
+  width: 10px;
+  height: 3px;
+  background-color: var(--xt-unread-line, rgb(255,0,0));
+  border-radius: 3px;
+  top: calc(var(--top) * 1vh);
+  cursor: pointer;
+  opacity: 80%;
+  z-index: 1;
+}
+
 .scroll-marker-container {
   display: contents;
 }
