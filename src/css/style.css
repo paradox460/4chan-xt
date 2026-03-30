@@ -2263,10 +2263,7 @@ div.post {
   padding: 0;
   position: fixed;
   right: -5px;
-  background-color: var(
-    --xt-scroll-maker-you, 
-    var(--xt-border-highlight, currentColor)
-  );
+  background-color: var(--xt-scroll-marker-you, var(--xt-scroll-maker-you,  var(--xt-border-highlight, currentColor)));
   border-radius: 3px;
   width: 10px;
   min-height: 5px;
