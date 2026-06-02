@@ -6,8 +6,17 @@ and import them in XT.
 Generally the release notes in each release ([latest](https://github.com/paradox460/4chan-xt/releases/latest)) will be more accurate, at a commit-by-commit level
 
 ### Unreleased
+
+#### New Features
 - **Unread Line Scroll Marker** — When both "Scroll Markers" and "Unread Line" are enabled, a marker now appears on the scroll bar indicating the position of the unread line. Click it to jump directly to where unread posts begin.
 
+#### Bug Fixes
+
+- **Incorporate upstream changes** — Incorporated changes from 4chan XT v1.14.24.0 and v1.14.24.1.
+
+#### Build & Maintenance
+
+- **Update lockfile** — Updated `mise.lock` file.
 
 ### 2026.3.29.1 (2026-03-30)
 
