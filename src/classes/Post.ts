@@ -152,6 +152,8 @@ export default class Post {
     if (this.info.capcode) { this.info.nameBlock += ` ## ${this.info.capcode}`; }
     if (this.info.uniqueID) { this.info.nameBlock += ` (ID: ${this.info.uniqueID})`; }
 
+    g.SITE.parseInfo?.(this);
+
     this.parseComment();
     this.parseQuotes();
     this.parseFiles();

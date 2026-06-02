@@ -256,6 +256,16 @@ $\
     return new Date(node.dataset.utc * 1000);
   },
 
+  parseInfo(post) {
+    if (!post.info.tripcode && /!/.test(post.info.name)) {
+      const m = post.info.name.match(/(.*?) ?(!.*)/);
+      if (m) {
+        post.info.name = m[1];
+        post.info.tripcode = m[2];
+      }
+    }
+  },
+
   parseFile(post, file) {
     let info;
     const {text, link, thumb} = file;

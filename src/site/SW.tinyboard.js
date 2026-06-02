@@ -132,7 +132,7 @@ const SWTinyboard = {
     },
     file: {
       text:  '.fileinfo',
-      link:  '.fileinfo > a',
+      link:  '.fileinfo > a, .fileinfo > .unimportant > a[download]',
       thumb: 'a > .post-image'
     },
     thumbLink: '.file > a',
@@ -272,7 +272,7 @@ $\
     let info, infoNode;
     const {text, link, thumb} = file;
     if ($.x(`ancestor::${this.xpath.postContainer}[1]`, text) !== post.nodes.root) { return false; } // file belongs to a reply
-    if (!(infoNode = link.nextSibling?.textContent.includes('(') ? link.nextSibling : link.nextElementSibling)) { return false; }
+    if (!(infoNode = (link.parentNode === text) ? (link.nextSibling?.textContent.includes('(') ? link.nextSibling : link.nextElementSibling) : link.parentNode)) { return false; }
     if (!(info = infoNode.textContent.match(/\((.*,\s*)?([\d.]+ ?[KMG]?B).*\)/))) { return false; }
     const nameNode = $('.postfilename', text);
     $.extend(file, {

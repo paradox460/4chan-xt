@@ -55,9 +55,11 @@
       "https://smug.nepu.moe/*",
       "https://sportschan.org/*",
       "https://www.sportschan.org/*",
-      "https://sushigirl.us/*",
-      "https://www.sushigirl.us/*",
-      "https://tvch.moe/*"
+      "https://sushigirl.cafe/*",
+      "https://www.sushigirl.cafe/*",
+      "https://tvch.moe/*",
+      "https://39chan.moe/*",
+      "https://wapchan.org/*"
     ],
     "matches_extra": [],
     "exclude_matches": [
