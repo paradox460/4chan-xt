@@ -37,4 +37,4 @@ jobs:
       run: |-
         zip -r builds/crx.zip builds/crx/*
         rm -rf builds/crx/
-        gh release create "${{ github.ref_name }}" --generate-notes -d --fail-on-no-commits --repo ${{ github.repository }} builds/*
+        gh release create "${{ github.ref_name }}" --notes-from-tag -d --fail-on-no-commits builds/*
