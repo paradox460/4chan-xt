@@ -31,6 +31,7 @@ import { svgPathData as stopSvg, width as stopW, height as stopH } from "@fas/fa
 import { svgPathData as arrowUpLongSvg, width as arrowUpLongW, height as arrowUpLongH } from "@fas/faArrowUpLong";
 import { svgPathData as arrowDownLongSvg, width as arrowDownLongW, height as arrowDownLongH } from "@fas/faArrowDownLong";
 import { svgPathData as fingerprintSvg, width as fingerprintW, height as fingerprintH } from "@fas/faFingerprint";
+import { svgPathData as replySvg, width as replyW, height as replyH } from "@fas/faReply";
 
 const toSvg = (svgPathData: string, width: string | number, height: string | number) => {
   return `<svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 ${width} ${height}">` +
@@ -68,7 +69,8 @@ const icons = {
    stop:            toSvg(stopSvg, stopW, stopH),
    arrowUpLong:     toSvg(arrowUpLongSvg, arrowUpLongW, arrowUpLongH),
    arrowDownLong:   toSvg(arrowDownLongSvg, arrowDownLongW, arrowDownLongH),
-   fingerprint:     toSvg(fingerprintSvg, fingerprintW, fingerprintH)
+   fingerprint:     toSvg(fingerprintSvg, fingerprintW, fingerprintH),
+   reply:           toSvg(replySvg, replyW, replyH),
 } as const;
 
 var Icon = {

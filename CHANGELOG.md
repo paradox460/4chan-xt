@@ -9,6 +9,7 @@ Generally the release notes in each release ([latest](https://github.com/paradox
 
 #### New Features
 - **Apply filename actions to all queued posts** — Double-clicking the Quick Reply **Randomize MD5**, **Randomize filename**, or **Reset filename** button now applies that action to every queued post in the dump list. Single-click still affects only the selected post.
+- **Reply chain when dumping** — A new toggle button in the Quick Reply action row (default off) makes each dumped post after the first automatically quote the immediately-preceding dump post. When armed, the just-posted post's number is appended as `>>{id}` on a new line at the end of the next queued post's comment.
 
 ### 2026.6.1
 

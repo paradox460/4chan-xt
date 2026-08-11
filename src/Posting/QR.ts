@@ -45,6 +45,7 @@ var QR = {
   max_duration_video: 0,
   forcedAnon: false,
   spoiler: false,
+  replyChain: false,
   link: undefined as HTMLElement,
   post: undefined as typeof post,
   posts: undefined as post[],
@@ -82,6 +83,7 @@ var QR = {
     urlButton: HTMLAnchorElement,
     pasteArea: HTMLAnchorElement,
     customCooldown: HTMLAnchorElement,
+    replyChain: HTMLAnchorElement,
     dumpButton: HTMLAnchorElement,
     status: HTMLInputElement,
     flashTag: HTMLSelectElement,
@@ -361,6 +363,11 @@ var QR = {
     const enabled = $.hasClass(QR.nodes.customCooldown, 'disabled');
     QR.setCustomCooldown(enabled);
     return $.set('customCooldownEnabled', enabled);
+  },
+
+  toggleReplyChain() {
+    QR.replyChain = !QR.replyChain;
+    QR.nodes.replyChain.classList.toggle('disabled', !QR.replyChain);
   },
 
   error(err: any, focusOverride?: boolean) {
@@ -797,6 +804,7 @@ var QR = {
     setNode('urlButton',      '#url-button');
     setNode('pasteArea',      '#paste-area');
     setNode('customCooldown', '#custom-cooldown-button');
+    setNode('replyChain',     '#reply-chain');
     setNode('dumpButton',     '#dump-button');
     setNode('status',         '[type=submit]');
     setNode('flashTag',       '[name=filetag]');
@@ -863,6 +871,7 @@ var QR = {
     $.on(nodes.fileRM,         'click',     () => QR.selected.rmFile());
     $.on(nodes.urlButton,      'click',     () => QR.handleUrl(''));
     $.on(nodes.customCooldown, 'click',     QR.toggleCustomCooldown);
+    $.on(nodes.replyChain,     'click',     QR.toggleReplyChain);
     $.on(nodes.dumpButton,     'click',     () => nodes.el.classList.toggle('dump'));
     $.on(nodes.fileInput,      'change',    QR.handleFiles);
     $.on(nodes.splitPost,      'click',     QR.splitPost);
@@ -917,6 +926,7 @@ var QR = {
     Icon.set(nodes.urlButton, 'link');
     Icon.set(nodes.pasteArea, 'clipboard');
     Icon.set(nodes.customCooldown, 'clock');
+    Icon.set(nodes.replyChain, 'reply');
     Icon.set(nodes.randomizeButton, 'shuffle');
     Icon.set(nodes.compress, 'shrink');
     Icon.set(nodes.randomizeMD5, 'fingerprint');
@@ -1220,6 +1230,10 @@ var QR = {
 
     if (postsCount) {
       post.rm();
+      if (QR.replyChain) {
+        const next = QR.posts[0];
+        next.setComment(next.com ? `${next.com}\n>>${postID}` : `>>${postID}`);
+      }
       QR.captcha.setup(d.activeElement === QR.nodes.status);
     } else if (Conf['Persistent QR']) {
       post.rm();

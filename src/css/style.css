@@ -1786,7 +1786,7 @@ input[type="checkbox"]:checked ~ .checkbox-letter {
   opacity: 0;
   pointer-events: none;
 }
-.checkbox-letter, #paste-area, #url-button, #custom-cooldown-button, #dump-button, #split-post {
+.checkbox-letter, #paste-area, #url-button, #custom-cooldown-button, #reply-chain, #dump-button, #split-post {
   opacity: 0.6;
 }
 #paste-area {
@@ -1796,6 +1796,9 @@ input[type="checkbox"]:checked ~ .checkbox-letter {
   opacity: 1;
 }
 #custom-cooldown-button.disabled {
+  opacity: 0.27;
+}
+#reply-chain.disabled {
   opacity: 0.27;
 }
 
