@@ -822,6 +822,18 @@ var QR = {
 
     QR.flagsInput();
 
+    const clickOrDouble = (node: HTMLElement, single: (e: MouseEvent) => void, double: (e: MouseEvent) => void) => {
+      let timer;
+      $.on(node, 'click', (e: MouseEvent) => {
+        clearTimeout(timer);
+        if (e.detail >= 2) {
+          double(e);
+        } else {
+          timer = setTimeout(() => single(e), 250);
+        }
+      });
+    };
+
     $.on(nodes.autohide,       'change',    QR.toggleHide);
     $.on(nodes.close,          'click',     QR.close);
     $.on(nodes.status,         'click',     QR.submit);
@@ -833,11 +845,17 @@ var QR = {
     $.on(nodes.drawButton,     'click',     QR.oekaki.draw);
     $.on(nodes.fileButton,     'click',     QR.openFileInput);
     $.on(nodes.noFile,         'click',     QR.openFileInput);
-    $.on(nodes.randomizeButton,'click',     () => { QR.selected.randomizeName(); });
+    clickOrDouble(nodes.randomizeButton,
+      () => { QR.selected.randomizeName(); },
+      () => { QR.randomizeAllNames(); });
     $.on(nodes.compress,       'click',     async () => { QR.handleFiles([await QR.convert(QR.selected.file)]); });
-    $.on(nodes.randomizeMD5,   'click',     async () => { QR.handleFiles([await QR.randomizeMD5(QR.selected.file)]); });
+    clickOrDouble(nodes.randomizeMD5,
+      async () => { QR.handleFiles([await QR.randomizeMD5(QR.selected.file)]); },
+      () => { QR.randomizeAllMD5(); });
     $.on(nodes.view,           'click',     QR.preview);
-    $.on(nodes.restoreNameButton,'click',   () => { QR.selected.restoreName(); });
+    clickOrDouble(nodes.restoreNameButton,
+      () => { QR.selected.restoreName(); },
+      () => { QR.restoreAllNames(); });
     $.on(nodes.filename,       'focus',     function() { return $.addClass(this.parentNode, 'focus'); });
     $.on(nodes.filename,       'blur',      function() { return $.rmClass(this.parentNode, 'focus'); });
     $.on(nodes.spoiler,        'change',    () => QR.selected.nodes.spoiler.click());
@@ -1324,7 +1342,7 @@ var QR = {
     return newFile;
   },
 
-  async randomizeMD5(file: File): Promise<File> {
+  async randomizeMD5(file: File, notify = true): Promise<File> {
     if (!file || !file.type.startsWith('image/')) {
       new Notice('warning', 'Randomize MD5 only works on image files.', 3);
       return file;
@@ -1360,8 +1378,39 @@ var QR = {
     const quality = mime === 'image/jpeg' ? 0.99 : undefined;
     const newFile = new File([await toBlob(mime, quality)], file.name, { type: mime });
 
-    new Notice('info', 'Image MD5 has been randomized.', 3);
+    if (notify) new Notice('info', 'Image MD5 has been randomized.', 3);
     return newFile;
+  },
+
+  randomizeAllNames() {
+    for (const post of QR.posts) {
+      if (!post.file) continue;
+      post.randomizeName(post === QR.selected);
+      post.saveFilename();
+      post.updateFilename();
+    }
+    new Notice('info', 'Randomized filenames for all queued posts.', 3);
+  },
+
+  restoreAllNames() {
+    for (const post of QR.posts) {
+      if (!post.file) continue;
+      post.restoreName(post === QR.selected);
+      post.saveFilename();
+      post.updateFilename();
+    }
+    new Notice('info', 'Restored original filenames for all queued posts.', 3);
+  },
+
+  async randomizeAllMD5() {
+    let count = 0;
+    for (const post of QR.posts) {
+      if (!post.file?.type.startsWith('image/')) continue;
+      const newFile = await QR.randomizeMD5(post.file, false);
+      await post.setFile(newFile);
+      count++;
+    }
+    new Notice('info', `Randomized MD5 for ${count} image${count === 1 ? '' : 's'}.`, 3);
   },
 
   previewUrl: undefined as string | undefined,
@@ -2232,8 +2281,9 @@ class post {
     if (set) QR.nodes.filename.value = this.filename;
   }
 
-  restoreName() {
-    QR.nodes.filename.value = this.filename = this.originalName;
+  restoreName(set = true) {
+    this.filename = this.originalName;
+    if (set) QR.nodes.filename.value = this.filename;
   }
 
   readFile() {
