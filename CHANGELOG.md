@@ -5,7 +5,7 @@ and import them in XT.
 
 Generally the release notes in each release ([latest](https://github.com/paradox460/4chan-xt/releases/latest)) will be more accurate, at a commit-by-commit level
 
-### Unreleased
+### 2026.8.11.0 (2026-08-11)
 
 #### New Features
 - **Apply filename actions to all queued posts** — Double-clicking the Quick Reply **Randomize MD5**, **Randomize filename**, or **Reset filename** button now applies that action to every queued post in the dump list. Single-click still affects only the selected post.
